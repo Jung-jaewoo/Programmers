@@ -1,29 +1,23 @@
-#include <iostream>
 #include <string>
 #include <vector>
 
 using namespace std;
 
-void dfs(vector<int>& numbers, int size, int i, int sum, int target, int& answer){
-    if(i+1<=size){
-       sum+=numbers[i];
-        dfs(numbers, size, i+1, sum, target, answer);
-        
-        sum-=numbers[i];
-        
-        sum-=numbers[i];
-        dfs(numbers, size, i+1, sum, target, answer);
+int dfs(vector<int>& numbers, int target, int idx, int sum){
+    if(idx == numbers.size()){
+        if(sum == target)
+            return 1;
+        return 0;
     }
-    else{
-        if(target == sum)
-            answer++;
-    }
+    
+    int ret = 0;
+    ret += dfs(numbers, target, idx + 1, sum + numbers[idx]);
+    ret += dfs(numbers, target, idx + 1, sum - numbers[idx]);
+    return ret;
 }
 
 int solution(vector<int> numbers, int target) {
     int answer = 0;
-    int sum = 0, size;
-    size = numbers.size();
-    dfs(numbers,size,0,sum,target,answer);
+    answer += dfs(numbers, target, 0, 0);
     return answer;
 }
