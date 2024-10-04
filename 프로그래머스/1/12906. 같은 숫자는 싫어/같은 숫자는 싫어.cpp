@@ -1,17 +1,13 @@
 #include <vector>
 #include <iostream>
-#include <stack>
+#include <algorithm>
 using namespace std;
 
 vector<int> solution(vector<int> arr) 
 {
-    vector<int> stk;
-    
-    stk.push_back(arr[0]);
-    for(int i=1; i<arr.size(); i++){
-        if(stk.back() != arr[i])
-            stk.push_back(arr[i]);
-    }
+    vector<int> answer;
+    arr.erase(unique(arr.begin(), arr.end()),arr.end());
+    answer = arr;
 
-    return stk;
+    return answer;
 }
